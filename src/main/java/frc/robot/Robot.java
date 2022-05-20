@@ -10,23 +10,22 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorController;
 import edu.wpi.first.wpilibj.motorcontrol.PWMSparkMax;
 
-/**
- * This is a demo program showing the use of the DifferentialDrive class, specifically it contains
- * the code necessary to operate a robot with tank drive.
- */
 public class Robot extends TimedRobot {
   private DifferentialDrive m_myRobot;
   private Joystick m_leftStick;
   private Joystick m_rightStick;
 
-  private final MotorController m_leftMotor = new PWMSparkMax(0);
-  private final MotorController m_rightMotor = new PWMSparkMax(1);
+  private int LEFT_MOTOR_PORT = 0; //FIXME
+  private int RIGHT_MOTOR_PORT = 1; //FIXME
+
+  private double leftPower;
+  private double rightPower;
+
+  private final MotorController m_leftMotor = new PWMSparkMax(LEFT_MOTOR_PORT);
+  private final MotorController m_rightMotor = new PWMSparkMax(RIGHT_MOTOR_PORT);
 
   @Override
   public void robotInit() {
-    // We need to invert one side of the drivetrain so that positive voltages
-    // result in both sides moving forward. Depending on how your robot's
-    // gearbox is constructed, you might have to invert the left side instead.
     m_rightMotor.setInverted(true);
 
     m_myRobot = new DifferentialDrive(m_leftMotor, m_rightMotor);
@@ -36,6 +35,9 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopPeriodic() {
-    m_myRobot.tankDrive(m_leftStick.getY(), m_rightStick.getY());
+    leftPower = m_leftStick.getY() + m_rightStick.getX();
+    rightPower = m_leftStick.getY() - m_rightStick.getX();
+
+    m_myRobot.tankDrive(leftPower, rightPower);
   }
 }
