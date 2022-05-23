@@ -7,8 +7,8 @@ package frc.robot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-import edu.wpi.first.wpilibj.motorcontrol.MotorController;
-import edu.wpi.first.wpilibj.motorcontrol.PWMSparkMax;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 public class Robot extends TimedRobot {
   private DifferentialDrive m_myRobot;
@@ -16,13 +16,13 @@ public class Robot extends TimedRobot {
   private Joystick m_rightStick;
 
   private int LEFT_MOTOR_PORT = 0; //FIXME
-  private int RIGHT_MOTOR_PORT = 1; //FIXME
+  private int RIGHT_MOTOR_PORT = 0; //FIXME
 
   private double leftPower;
   private double rightPower;
 
-  private final MotorController m_leftMotor = new PWMSparkMax(LEFT_MOTOR_PORT);
-  private final MotorController m_rightMotor = new PWMSparkMax(RIGHT_MOTOR_PORT);
+  private final CANSparkMax m_leftMotor = new CANSparkMax(LEFT_MOTOR_PORT, MotorType.kBrushless);
+  private final CANSparkMax m_rightMotor = new CANSparkMax(RIGHT_MOTOR_PORT, MotorType.kBrushless);
 
   @Override
   public void robotInit() {
